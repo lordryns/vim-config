@@ -7,26 +7,33 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set termguicolors
 
-call plug#begin() 
+call plug#begin()
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
 call plug#end()
 
-" Enable completion
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ "\<TAB>"
-inoremap <silent><expr> <S-TAB>
-      \ pumvisible() ? "\<C-p>" :
-      \ "\<C-h>"
-
-" Use <CR> to confirm completion
-inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
-
-" Show diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-set termguicolors
 let g:material_theme_style = 'darker'
 colorscheme material
+
+inoremap <silent><expr> <TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+
+nnoremap gd :LspDefinition<CR>
+nnoremap K :LspHover<CR>
+nnoremap <leader>rn :LspRename<CR>
+nnoremap <leader>ca :LspCodeAction<CR>
+nnoremap [g :LspPreviousDiagnostic<CR>
+nnoremap ]g :LspNextDiagnostic<CR>
+
+let g:lsp_diagnostics_signs_enabled = 1
+let g:lsp_diagnostics_virtual_text_enabled = 0
+
+
